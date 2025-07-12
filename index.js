@@ -1,4 +1,5 @@
-const { ApolloServer, gql } = require("apollo-server");
+import { ApolloServer, gql } from 'apollo-server';
+
 
 // Datos en memoria
 const persons = [
@@ -30,13 +31,16 @@ const persons = [
 
 // Definir esquema GraphQL
 const typeDefinitions = gql`
+  type Address {
+    street: String!
+    city: String!
+  }
+
   type Person {
     name: String!
     phone: String!
-    street: String!
+    address: Address!
     city: String!
-    address: String!
-    check: String!
     id: ID!
     canDrink: Boolean!
   }
@@ -58,11 +62,11 @@ const resolvers = {
     },
   },
   Person: {
-    canDrink: (root) => root.age > 18,
-    address: (root) => {
-      return `${root.street}, ${root.city}`;
-    },
-    check: () => "midu",
+    address: (root) => ({
+      street: root.street,
+      city: root.city,
+    }),
+    canDrink: (root) => root.age >= 18,
   },
 };
 
