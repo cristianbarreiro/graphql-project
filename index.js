@@ -38,6 +38,7 @@ const typeDefinitions = gql`
   type Query {
     personCount: Int!
     allPersons: [Person!]!
+    findPerson(name: String!): Person
   }
 `;
 
@@ -46,6 +47,10 @@ const resolvers = {
   Query: {
     personCount: () => persons.length,
     allPersons: () => persons,
+    findPerson: (root, args) => {
+      const { name } = args;
+      return persons.find((person) => person.name === name);
+    },
   },
 };
 
