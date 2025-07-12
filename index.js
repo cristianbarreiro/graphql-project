@@ -3,6 +3,7 @@ const { ApolloServer, gql } = require("apollo-server");
 // Datos en memoria
 const persons = [
   {
+    age: 23,
     name: "John Doe",
     phone: "123-456-7890",
     street: "123 Elm St",
@@ -10,6 +11,7 @@ const persons = [
     id: "1",
   },
   {
+    age: 17,
     name: "Jane Smith",
     phone: "987-654-3210",
     street: "456 Oak St",
@@ -17,6 +19,7 @@ const persons = [
     id: "2",
   },
   {
+    age: 36,
     name: "Alice Johnson",
     phone: "555-123-4567",
     street: "789 Pine St",
@@ -32,7 +35,10 @@ const typeDefinitions = gql`
     phone: String!
     street: String!
     city: String!
+    address: String!
+    check: String!
     id: ID!
+    canDrink: Boolean!
   }
 
   type Query {
@@ -47,10 +53,16 @@ const resolvers = {
   Query: {
     personCount: () => persons.length,
     allPersons: () => persons,
-    findPerson: (root, args) => {
-      const { name } = args;
+    findPerson: (parent, { name }) => {
       return persons.find((person) => person.name === name);
     },
+  },
+  Person: {
+    canDrink: (root) => root.age > 18,
+    address: (root) => {
+      return `${root.street}, ${root.city}`;
+    },
+    check: () => "midu",
   },
 };
 
