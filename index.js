@@ -30,6 +30,11 @@ const persons = [
 
 // Definir esquema GraphQL
 const typeDefinitions = gql`
+  enum YesNo {
+    YES
+    NO
+  }
+
   type Address {
     street: String!
     city: String!
@@ -46,7 +51,7 @@ const typeDefinitions = gql`
 
   type Query {
     personCount: Int!
-    allPersons: [Person!]!
+    allPersons(phone: YesNo): [Person!]!
     findPerson(name: String!): Person
   }
 
@@ -75,7 +80,16 @@ const typeDefinitions = gql`
 const resolvers = {
   Query: {
     personCount: () => persons.length,
-    allPersons: () => persons,
+    allPersons: (root, args) => {
+      if (!args.phone) return persons;
+      // return persons.filter(person =>{
+      //   return args.phone === "YES" ? person.phone : !person.phone;
+      // });
+      const byPhone = (person) =>
+        args.phone === "YES" ? person.phone : !person.phone;
+
+      return persons.filter(byPhone);
+    },
     findPerson: (parent, { name }) => {
       return persons.find((person) => person.name === name);
     },
