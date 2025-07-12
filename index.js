@@ -1,6 +1,5 @@
-import { ApolloServer, gql } from 'apollo-server';
-
-
+import { ApolloServer, gql } from "apollo-server";
+import { v1 as uuid } from "uuid";
 // Datos en memoria
 const persons = [
   {
@@ -50,6 +49,26 @@ const typeDefinitions = gql`
     allPersons: [Person!]!
     findPerson(name: String!): Person
   }
+
+  type Mutation {
+    addPerson(
+      name: String!
+      phone: String!
+      street: String!
+      city: String!
+      age: Int!
+    ): Person
+    editPerson(
+      id: ID!
+      name: String
+      phone: String
+      street: String
+      city: String
+      age: Int
+    ): Person
+    deletePerson(id: ID!): Person
+    deleteAllPersons: [Person!]!
+  }
 `;
 
 // Resolvers
@@ -59,6 +78,13 @@ const resolvers = {
     allPersons: () => persons,
     findPerson: (parent, { name }) => {
       return persons.find((person) => person.name === name);
+    },
+  },
+  Mutation: {
+    addPerson: (root, args) => {
+      const person = { ...args, id: uuid() };
+      persons.push(person);
+      return person;
     },
   },
   Person: {
