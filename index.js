@@ -91,6 +91,28 @@ const resolvers = {
       persons.push(person);
       return person;
     },
+
+    editPerson: (root, args) => {
+      const personIndex = persons.findIndex((p) => p.id === args.id);
+      if (personIndex === -1) return null;
+
+      const updatedPerson = { ...persons[personIndex], ...args };
+      persons[personIndex] = updatedPerson;
+      return updatedPerson;
+    },
+
+    deletePerson: (root, { id }) => {
+      const index = persons.findIndex((p) => p.id === id);
+      if (index === -1) return null;
+      const [removed] = persons.splice(index, 1);
+      return removed;
+    },
+
+    deleteAllPersons: () => {
+      const deleted = [...persons];
+      persons.length = 0;
+      return deleted;
+    },
   },
   Person: {
     address: (root) => ({
