@@ -1,109 +1,106 @@
-🚀 GraphQL API con Apollo Server
+# GraphQL Project 🕸️
 
-Este proyecto es una API simple de GraphQL construida con Apollo Server en Node.js. La API expone un listado de personas en memoria. El objetivo es entender cómo funcionan los esquemas, queries y resolvers en GraphQL sin necesidad de una base de datos externa.
+Este proyecto es una API construida con **GraphQL** y **Apollo Server** sobre **Node.js** y **Express**, con un enfoque educativo. Implementa queries, mutations, tipos personalizados y resolvers para manejar un conjunto simulado de datos.
 
-Basado en el video de referencia:  
-https://www.youtube.com/watch?v=QG-qbmW-wes&list=PL2i4CEznA8jWqp8nsonAjddiN4XctqIuh&index=2
+## 🚀 Tecnologías utilizadas
 
----
-
-Tecnologías utilizadas:
-
-- Node.js  
-- Apollo Server (v3)  
-- GraphQL  
-- nodemon (modo desarrollo)
+- Node.js
+- Express
+- Apollo Server (GraphQL)
+- JavaScript (ESModules)
+- nodemon (desarrollo)
 
 ---
 
-Instalación rápida (comandos del video):
+## 📦 Instalación
 
-npm init -y  
-npm install apollo-server graphql  
-npm install --save-dev nodemon  
+1. **Clonar el repositorio**
 
-Luego agregá los siguientes scripts al package.json:
-
-"scripts": {
-  "start": "node index.js",
-  "dev": "nodemon index.js"
-}
-
----
-
-Cómo empezar:
-
-1. Clonar el repositorio (si aplica):
-
-git clone https://github.com/tu-usuario/graphql-project.git  
+```bash
+git clone https://github.com/cristianbarreiro/graphql-project.git
 cd graphql-project
+git checkout main1
+```
 
-2. Instalá las dependencias:
+2. **Instalar dependencias**
 
+```bash
 npm install
+```
 
-3. Iniciá el servidor
+3. **Ejecutar el servidor en modo desarrollo**
 
-Modo desarrollo (recarga automática):
-
+```bash
 npm run dev
-
-Modo normal:
-
-npm start
+```
 
 ---
 
-Esquema GraphQL:
+## 🧪 Scripts disponibles
 
-type Person {
-  name: String!
-  phone: String!
-  street: String!
-  city: String!
-  id: ID!
-}
-
-type Query {
-  allPersons: [Person!]!
-}
+| Comando       | Descripción                      |
+| ------------- | -------------------------------- |
+| `npm run dev` | Inicia el servidor con `nodemon` |
+| `npm start`   | Inicia el servidor con Node      |
 
 ---
 
-Consultas de ejemplo:
+## 📁 Estructura del proyecto
 
-Obtener todas las personas:
-
-{
-  allPersons {
-    id
-    name
-    phone
-    street
-    city
-  }
-}
-
----
-
-Estructura del proyecto:
-
+```
 graphql-project/
-├── index.js          # Servidor Apollo
+│
+├── src/
+│   ├── data/              # Datos simulados (mock)
+│   ├── schema/            # Definiciones de tipos y resolvers
+│   └── index.js           # Punto de entrada
+│
 ├── package.json
-├── README.md
-├── .gitignore
+└── README.md
+```
 
 ---
 
-Recursos útiles:
+## 🧠 Qué vas a encontrar
 
-- Apollo Server Docs: https://www.apollographql.com/docs/apollo-server/  
-- GraphQL Docs: https://graphql.org/learn/  
-- Video en YouTube: https://www.youtube.com/watch?v=QG-qbmW-wes&list=PL2i4CEznA8jWqp8nsonAjddiN4XctqIuh&index=2
+- Tipos personalizados (`TypeDefs`)
+- Queries y Mutations
+- Resolvers con lógica básica
+- Datos en memoria
+- Separación por responsabilidades
 
 ---
 
-Licencia:
+## 🌐 Acceso
 
-Este proyecto está bajo la licencia MIT.
+Una vez iniciado el servidor (`npm run dev`), accedé al entorno de pruebas en:
+
+```
+http://localhost:3000/
+```
+
+Desde ahí podés probar tus queries y mutations con el explorador GraphQL incorporado.
+
+---
+
+## 📌 Notas
+
+- El servidor corre por defecto en el puerto `3000`
+- El proyecto usa módulos ES (`"type": "module"` en `package.json`)
+- Los datos son mockeados en memoria (sin base de datos)
+
+---
+
+## ✨ Futuras mejoras
+
+- Integrar base de datos real (MongoDB o PostgreSQL)
+- Agregar paginación y filtros
+- Implementar autenticación
+
+---
+
+## 📚 Aprendizaje
+
+Este proyecto está pensado como una introducción práctica a GraphQL desde cero, explorando cómo crear un servidor, definir tipos y manejar consultas reales.
+
+---
