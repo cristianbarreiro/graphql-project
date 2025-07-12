@@ -56,6 +56,10 @@ const typeDefinitions = gql`
   }
 
   type Mutation {
+    editNumber(
+      name: String!
+      phone: String!
+    ): Person
     addPerson(
       name: String!
       phone: String!
@@ -95,6 +99,16 @@ const resolvers = {
     },
   },
   Mutation: {
+    editNumber: (root, args) => {
+      const person = persons.find((p) => p.name === args.name);
+      if (!person) return null;
+
+      const updatedPerson = { ...person, phone: args.phone };
+
+      const index = persons.findIndex((p) => p.id === person.id);
+      persons[index] = updatedPerson;
+      return updatedPerson;
+    },
     addPerson: (root, args) => {
       if (persons.find((p) => p.name === args.name)) {
         throw new UserInputError("Name must be unique", {
