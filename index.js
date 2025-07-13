@@ -1,5 +1,6 @@
 import { ApolloServer, gql, UserInputError } from "apollo-server";
 import { v1 as uuid } from "uuid";
+import axios from "axios";
 // Datos en memoria
 const persons = [
   {
@@ -56,10 +57,7 @@ const typeDefinitions = gql`
   }
 
   type Mutation {
-    editNumber(
-      name: String!
-      phone: String!
-    ): Person
+    editNumber(name: String!, phone: String!): Person
     addPerson(
       name: String!
       phone: String!
@@ -84,15 +82,18 @@ const typeDefinitions = gql`
 const resolvers = {
   Query: {
     personCount: () => persons.length,
-    allPersons: (root, args) => {
-      if (!args.phone) return persons;
-      // return persons.filter(person =>{
-      //   return args.phone === "YES" ? person.phone : !person.phone;
-      // });
-      const byPhone = (person) =>
-        args.phone === "YES" ? person.phone : !person.phone;
+    allPersons: async (root, args) => {
+      const { data: personsFromRestApi } = await axios.get(
+        "http://localhost:3000/persons"
+      );
+      console.log(personsFromRestApi);
 
-      return persons.filter(byPhone);
+      if (!args.phone) return personsFromRestApi;
+
+      const byPhone = (person) =>
+        args.phone === "YES" ? !!person.phone : !person.phone;
+
+      return personsFromRestApi.filter(byPhone);
     },
     findPerson: (parent, { name }) => {
       return persons.find((person) => person.name === name);

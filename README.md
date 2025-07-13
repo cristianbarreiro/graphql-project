@@ -1,12 +1,18 @@
+
 # GraphQL Project 🕸️
 
-Este proyecto es una API construida con **GraphQL** y **Apollo Server** sobre **Node.js** y **Express**, con un enfoque educativo. Implementa queries, mutations, tipos personalizados y resolvers para manejar un conjunto simulado de datos.
+Este proyecto es una API construida con **GraphQL** y **Apollo Server** sobre **Node.js** y **Express**, con un enfoque educativo. Además, integra un backend REST simulado con **json-server** para combinar datos REST y GraphQL en una arquitectura híbrida.
+
+Implementa queries, mutations, tipos personalizados y resolvers que consumen datos desde una API REST local y datos en memoria.
+
+---
 
 ## 🚀 Tecnologías utilizadas
 
 - Node.js
 - Express
 - Apollo Server (GraphQL)
+- json-server (API REST simulada)
 - JavaScript (ESModules)
 - nodemon (desarrollo)
 
@@ -28,20 +34,33 @@ git checkout main1
 npm install
 ```
 
-3. **Ejecutar el servidor en modo desarrollo**
+3. **Iniciar el backend REST simulado con json-server**
+
+```bash
+npm run json-server
+```
+
+Esto levantará un servidor REST en `http://localhost:3000` con los datos simulados definidos en `db.json`.
+
+4. **Ejecutar el servidor GraphQL en modo desarrollo**
+
+En una nueva terminal, ejecutá:
 
 ```bash
 npm run dev
 ```
 
+Esto levantará el servidor GraphQL en `http://localhost:4000` (o el puerto configurado).
+
 ---
 
 ## 🧪 Scripts disponibles
 
-| Comando       | Descripción                      |
-| ------------- | -------------------------------- |
-| `npm run dev` | Inicia el servidor con `nodemon` |
-| `npm start`   | Inicia el servidor con Node      |
+| Comando       | Descripción                               |
+| ------------- | -----------------------------------------|
+| `npm run json-server` | Inicia el servidor REST simulado con json-server en el puerto 3000 |
+| `npm run dev` | Inicia el servidor GraphQL con `nodemon` |
+| `npm start`   | Inicia el servidor GraphQL con Node      |
 
 ---
 
@@ -51,10 +70,11 @@ npm run dev
 graphql-project/
 │
 ├── src/
-│   ├── data/              # Datos simulados (mock)
+│   ├── data/              # Datos simulados en memoria
 │   ├── schema/            # Definiciones de tipos y resolvers
-│   └── index.js           # Punto de entrada
+│   └── index.js           # Punto de entrada GraphQL
 │
+├── db.json                # Datos JSON para json-server (API REST simulada)
 ├── package.json
 └── README.md
 ```
@@ -63,44 +83,48 @@ graphql-project/
 
 ## 🧠 Qué vas a encontrar
 
-- Tipos personalizados (`TypeDefs`)
-- Queries y Mutations
-- Resolvers con lógica básica
-- Datos en memoria
-- Separación por responsabilidades
+- Servidor REST simulado con `json-server` para exponer datos en `http://localhost:3000/persons`
+- Servidor GraphQL que consume la API REST y datos en memoria mediante resolvers
+- Queries y Mutations combinadas que usan datos REST y memoria local
+- Tipos personalizados, filtros y resolvers asincrónicos
+- Ejemplo de arquitectura híbrida REST + GraphQL
 
 ---
 
 ## 🌐 Acceso
 
-Una vez iniciado el servidor (`npm run dev`), accedé al entorno de pruebas en:
+- API REST simulada (json-server):  
+  `http://localhost:3000/persons`
 
-```
-http://localhost:3000/
-```
-
-Desde ahí podés probar tus queries y mutations con el explorador GraphQL incorporado.
+- Servidor GraphQL (Apollo Server):  
+  `http://localhost:4000/` (Explorador GraphQL)
 
 ---
 
-## 📌 Notas
+## 📌 Notas importantes
 
-- El servidor corre por defecto en el puerto `3000`
-- El proyecto usa módulos ES (`"type": "module"` en `package.json`)
-- Los datos son mockeados en memoria (sin base de datos)
+- El backend REST simulado corre en el puerto `3000` con `json-server`.
+- El servidor GraphQL corre en el puerto `4000`.
+- El proyecto usa módulos ES (`"type": "module"` en `package.json`).
+- Los datos REST se encuentran en `db.json`.
+- Mutaciones en GraphQL actualmente modifican datos en memoria, no en REST (puedes extender esto).
+- Para producción, se recomienda reemplazar `json-server` por una base de datos real.
 
 ---
 
 ## ✨ Futuras mejoras
 
-- Integrar base de datos real (MongoDB o PostgreSQL)
-- Agregar paginación y filtros
-- Implementar autenticación
+- Sincronizar mutaciones GraphQL con la API REST usando peticiones `POST`, `PUT` y `DELETE`.
+- Integrar base de datos real (MongoDB, PostgreSQL).
+- Añadir paginación, filtros avanzados y autenticación.
+- Desplegar ambos servidores en entorno cloud.
 
 ---
 
 ## 📚 Aprendizaje
 
-Este proyecto está pensado como una introducción práctica a GraphQL desde cero, explorando cómo crear un servidor, definir tipos y manejar consultas reales.
+Este proyecto es una introducción práctica a GraphQL, mostrando cómo combinarlo con APIs REST existentes para migraciones progresivas o arquitecturas híbridas, manteniendo la flexibilidad y potencia de GraphQL.
 
 ---
+
+Si querés puedo ayudarte a preparar los scripts npm y configuración para levantar ambos servidores en paralelo con un solo comando. ¿Te interesa?

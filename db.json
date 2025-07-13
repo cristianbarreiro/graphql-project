@@ -1,0 +1,28 @@
+{
+  "persons": [
+    {
+      "age": 23,
+      "name": "John Doe",
+      "phone": "123-456-7890",
+      "street": "123 Elm St",
+      "city": "Springfield",
+      "id": "1"
+    },
+    {
+      "age": 17,
+      "name": "Jane Smith",
+      "phone": "987-654-3210",
+      "street": "456 Oak St",
+      "city": "Shelbyville",
+      "id": "2"
+    },
+    {
+      "age": 36,
+      "name": "Alice Johnson",
+      "phone": "555-123-4567",
+      "street": "789 Pine St",
+      "city": "Capital City",
+      "id": "3"
+    }
+  ]
+}
